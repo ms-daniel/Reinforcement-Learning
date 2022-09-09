@@ -25,6 +25,7 @@ import java.awt.Color;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.UIManager;
 
 public class menu extends JPanel {
 
@@ -76,26 +77,6 @@ public class menu extends JPanel {
 		gbc_x61x61.gridx = 1;
 		gbc_x61x61.gridy = 2;
 		add(x61x61, gbc_x61x61);
-		
-		JButton exit = new JButton("Exit");
-		exit.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		exit.setFocusable(false);
-		exit.setFocusTraversalKeysEnabled(false);
-		exit.setFocusPainted(false);
-		exit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		exit.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
-		GridBagConstraints gbc_exit = new GridBagConstraints();
-		gbc_exit.insets = new Insets(0, 0, 0, 5);
-		gbc_exit.gridx = 1;
-		gbc_exit.gridy = 3;
-		add(exit, gbc_exit);
-		
-		exit.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				System.exit(ABORT);
-			}
-		});
 		
 		
 
