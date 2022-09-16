@@ -3,6 +3,7 @@ package mazeCreate;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.ImageIcon;
 
@@ -15,7 +16,7 @@ public class maze61x61 {
 	}
 	
 	public ImageIcon drawnMaze() {
-		int width=310, height=310;
+		int width=305, height=305;
 		//cria um buffer para a imagem
 		buffer = new BufferedImage( width, height, BufferedImage.TYPE_INT_ARGB);
 		Graphics g = buffer.createGraphics();
@@ -24,23 +25,11 @@ public class maze61x61 {
 		g.setColor( Color.BLACK );
 		for(int i = 0; i < 61; i++){
 			for(int j = 0; j < 61; j++){
-				
+				if(matriz[i][j] == 1) {
+					g.fillRect(j*5,i*5,5,5);
+				}
 			}
 		}
-		/*for(int i=0;i <= 305; i+=5)
-			for(int j = 0; j <= 305; j+=5) {
-				System.out.println(i + " ");
-				
-				if((i == 0 || i == 305)) {
-					g.fillRect(j,i,5,5);
-					
-				}
-				if((i <= 305) && (j == 0 || j == 305)) {
-					g.fillRect(j,i,5,5);
-				}
-			}*/
-		
-		//g.drawLine(0,0,width,height);
 		return new ImageIcon(buffer);
 	}
 }
