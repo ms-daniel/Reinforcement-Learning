@@ -32,6 +32,7 @@ public class window extends JFrame {
 	 * Create the frame.
 	 */
 	public window() {
+		setResizable(false);
 		setTitle("Maze - Q-Learning");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(566, 430);

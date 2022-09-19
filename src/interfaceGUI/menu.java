@@ -18,6 +18,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JCheckBox;
 
 public class menu extends JPanel {
 	private JButton x61x61;
@@ -64,6 +65,13 @@ public class menu extends JPanel {
 		JMenuItem barExit = new JMenuItem("Exit");
 		barExit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		arquivoBar.add(barExit);
+		
+		JMenu visualization = new JMenu("Visualization");
+		menuBar.add(visualization);
+		
+		JCheckBox animationCheck = new JCheckBox("No creation animation");
+		animationCheck.setToolTipText("Disables the maze presentation animation.");
+		visualization.add(animationCheck);
 
 		bar61x61.addMouseListener(new MouseAdapter() {
 			@Override
@@ -82,7 +90,7 @@ public class menu extends JPanel {
 				}
 				//
 				if(!create61) {
-					maze61 = new maze61(tabbedPane, tabbedPane.getTabCount());
+					maze61 = new maze61(tabbedPane, tabbedPane.getTabCount(), animationCheck.isSelected());
 					//add o panel ao tabbedpane
 					tabbedPane.addTab("61 x 61", maze61);
 					maze61.setThisComponent(maze61);
@@ -113,5 +121,4 @@ public class menu extends JPanel {
 	public JButton getExit() {
 		return exit;
 	}
-
 }
