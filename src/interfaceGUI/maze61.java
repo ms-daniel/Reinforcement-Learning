@@ -47,10 +47,14 @@ public class maze61 extends JPanel {
 	private matriz matr = new matriz();
 	private maze61 esse;
 	private int[][] mat = matr.getM61();
+	
 	private JRadioButton uploadMazeRB;
 	private JRadioButton defaultMazeRB;
+	
 	private JTextField fileField;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	
+	private maze61x61Thread mazeThread;
 	/**
 	 * Create the panel.
 	 */
@@ -230,19 +234,36 @@ public class maze61 extends JPanel {
 			}
 		});
 		
+		clearMaze.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				nWayOutSpinner.setEnabled(false);
+				nStepSpinner.setEnabled(false);
+				imagem.setIcon(null);
+				mazeThread.clearMaze();
+				
+				construct.setEnabled(true);
+				
+				uploadMazeRB.setEnabled(true);
+				defaultMazeRB.setEnabled(true);
+				
+				slider.setEnabled(false);
+				nStepsRB.setEnabled(false);
+				untilFindWayRB.setEnabled(false);
+				nWayOutSpinner.setEnabled(false);
+				clearMaze.setEnabled(false);
+				play.setEnabled(false);
+			}
+		});
+		
 		construct.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(defaultMazeRB.isSelected()) {
 					construct.setEnabled(false);
 					
-					if(animation) {
-						imagem.setIcon( new maze61x61(mat).drawnMaze() );
-						play.setEnabled(true);	
-					}
-					else {
-						new maze61x61Thread(mat,imagem,play).start();
-					}
+					mazeThread = new maze61x61Thread(mat,imagem,play, animation);
+					mazeThread.start();
 					
 					uploadMazeRB.setEnabled(false);
 					defaultMazeRB.setEnabled(false);
@@ -252,7 +273,6 @@ public class maze61 extends JPanel {
 					untilFindWayRB.setEnabled(true);
 					nWayOutSpinner.setEnabled(true);
 					clearMaze.setEnabled(true);
-					
 				}
 			}
 		});
@@ -287,14 +307,14 @@ public class maze61 extends JPanel {
 		
 		untilFindWayRB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(nStepsRB.isSelected()) {
-					nStepsRB.setEnabled(false);
+					nWayOutSpinner.setEnabled(true);
+					nStepSpinner.setEnabled(false);
+			}
+		});
+		nStepsRB.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 					nWayOutSpinner.setEnabled(false);
-					
-					untilFindWayRB.setEnabled(true);
 					nStepSpinner.setEnabled(true);
-					
-				}
 			}
 		});
 		

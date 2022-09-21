@@ -14,14 +14,23 @@ public class maze61x61Thread extends Thread{
 	private BufferedImage buffer;
 	private JLabel img = new JLabel();
 	private JButton play;
+	private boolean animation = true;
 	
 	
 	
 	
-	public maze61x61Thread(int[][] matriz, JLabel label, JButton play) {
+	public maze61x61Thread(int[][] matriz, JLabel label, JButton play, boolean anim) {
 		this.matriz = matriz;
 		this.img= label;
 		this.play = play;
+		this.animation = anim;
+	}
+	
+	public void clearMaze() {
+		matriz = null;
+		img = null;
+		play = null;
+		buffer = null;
 	}
 	
 	public ImageIcon drawnMaze() {
@@ -45,18 +54,24 @@ public class maze61x61Thread extends Thread{
 
 	@Override
 	public void run(){
-		img.setSize(0,0);
-		img.setIcon(drawnMaze()); 
-		for(int i = 0; i <= 305; i+=5) {
-				img.setSize(i,305);
-				try {
-					Thread.sleep(20);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+		if(!animation) {
+			img.setSize(0,0);
+			img.setIcon(drawnMaze()); 
+			for(int i = 0; i <= 305; i+=5) {
+					img.setSize(i,305);
+					try {
+						Thread.sleep(20);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			}
+		}
+		else {
+			img.setIcon(drawnMaze()); 
 		}
 		play.setEnabled(true);
-			
 	}
+	
+
 }

@@ -70,6 +70,7 @@ public class menu extends JPanel {
 		menuBar.add(visualization);
 		
 		JCheckBox animationCheck = new JCheckBox("No creation animation");
+		animationCheck.setSelected(true);
 		animationCheck.setToolTipText("Disables the maze presentation animation.");
 		visualization.add(animationCheck);
 
