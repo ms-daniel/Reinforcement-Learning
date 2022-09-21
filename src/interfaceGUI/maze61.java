@@ -208,8 +208,8 @@ public class maze61 extends JPanel {
 		
 		JLabel areaM = new JLabel();
 		areaM.setFocusable(false);
-		areaM.setBorder(new BevelBorder(BevelBorder.RAISED, new Color(64, 64, 64), Color.DARK_GRAY, new Color(64, 64, 64), null));
-		areaM.setBounds(219, 17, 307, 307);
+		areaM.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(30, 144, 255), new Color(30, 144, 255), new Color(0, 0, 205), null));
+		areaM.setBounds(219, 17, 306, 306);
 		add(areaM);
 		
 		JButton construct = new JButton("Construct");
@@ -252,13 +252,15 @@ public class maze61 extends JPanel {
 				untilFindWayRB.setEnabled(false);
 				nWayOutSpinner.setEnabled(false);
 				clearMaze.setEnabled(false);
+				untilFindWayRB.setSelected(true);
+				
 				play.setEnabled(false);
 			}
 		});
 		
 		construct.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent e) {
 				if(defaultMazeRB.isSelected()) {
 					construct.setEnabled(false);
 					
