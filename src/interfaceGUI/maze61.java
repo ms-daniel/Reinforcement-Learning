@@ -36,6 +36,9 @@ import javax.swing.ButtonGroup;
 import javax.swing.ButtonModel;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
+import IA.reforcement;
+
 import javax.swing.event.ChangeEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -226,6 +229,14 @@ public class maze61 extends JPanel {
 		menuLabel.setBorder(new BevelBorder(BevelBorder.RAISED, null, Color.DARK_GRAY, Color.DARK_GRAY, null));
 		menuLabel.setBounds(10, 17, 199, 307);
 		add(menuLabel);
+		
+		play.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				reforcement iaR = new reforcement(mat,1,3000);
+				iaR.start();
+			}
+		});
 		
 		closeTab.addMouseListener(new MouseAdapter() {
 			@Override

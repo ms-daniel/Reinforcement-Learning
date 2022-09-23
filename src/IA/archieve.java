@@ -19,7 +19,7 @@ public class archieve {
 	 * @param matriz - a matriz que ira receber os valores da tabela Q
 	 * @param file - o nome do arquivo dentro da pasta do projeto (ex: "qTable.txt"), e preferencial que o arquvio esteja separado por virgulas
 	 */
-	public void loadFileInMe(float[][] matriz, String file) {
+	public void loadFileInMe(double[][] matriz, String file) {
 		BufferedReader buffRead = null;
 		try{
 			buffRead = new BufferedReader(new FileReader(file));
@@ -32,13 +32,14 @@ public class archieve {
 			for(int i = 0; linha != null; i++) {
 				matSTR = linha.split(";");
 				
-				matriz[i][0] = Float.parseFloat(matSTR[0]);
-				matriz[i][1] = Float.parseFloat(matSTR[1]);
-				matriz[i][2] = Float.parseFloat(matSTR[2]);
-				matriz[i][3] = Float.parseFloat(matSTR[3]);
+				matriz[i][0] = Double.parseDouble(matSTR[0]);
+				matriz[i][1] = Double.parseDouble(matSTR[1]);
+				matriz[i][2] = Double.parseDouble(matSTR[2]);
+				matriz[i][3] = Double.parseDouble(matSTR[3]);
 				
 				linha = buffRead.readLine();
 			}
+			
 		}catch(IOException e) {
 			
 		}catch(ArrayIndexOutOfBoundsException e) {
@@ -59,7 +60,7 @@ public class archieve {
 	 * @param matriz - a matriz que contem os valores que serao salvos no arquivo
 	 * @param file - o nome do arquivo dentro da pasta do projeto onde sera salvas as informacoes (ex: "qTable.txt")
 	 */
-	public void saveFile(float[][] matriz , String file) {
+	public void saveFile(double[][] matriz , String file) {
 		try {
 			arq = new FileWriter(file);
 			gravarArq = new PrintWriter(arq);
