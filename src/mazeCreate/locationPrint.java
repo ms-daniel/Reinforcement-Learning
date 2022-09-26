@@ -13,7 +13,9 @@ public class locationPrint extends Thread{
 	private static int x, x_ant=0, y, y_ant=0;
 	private BufferedImage buffer;
 	private JLabel img = new JLabel();
+	
 	private boolean stop = false;
+	//private boolean hide = false;
 	
 	public locationPrint(JLabel label) {
 		this.img= label;
@@ -49,17 +51,12 @@ public class locationPrint extends Thread{
 	}
 	
 	/**
-	 * chame setPosition antes de dar um start na thread
+	 * apenas mantem a thread viva
 	 */
 	@Override
 	public void run(){
 		while(!stop) {
-			//System.out.println("x: " + x + " y: " + y);
-			/*if(x_ant != x || y_ant != y) {
-				img.setIcon(printPosition());
-				x_ant = x;
-				y_ant = y;
-			}*/
+
 		}
 	}
 	

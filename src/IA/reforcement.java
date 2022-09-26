@@ -22,7 +22,14 @@ public class reforcement extends Thread{
 	
 	private int goal;
 	private int steps = 0;
+	private int exits = 0;
 	private int speed = 0;
+	private boolean hide = false;
+	
+	private JLabel xL;
+	private JLabel yL;
+	private JLabel sL;
+	private JLabel eL;
 	
 	private double y = 0.9;
 	
@@ -37,7 +44,7 @@ public class reforcement extends Thread{
 	//onde sera desenhado o local do agente
 	locationPrint agente;
 	
-	public reforcement(int[][] matriz, int mode, int goal, locationPrint agente) {
+	public reforcement(int[][] matriz, int mode, int goal, locationPrint agente, JLabel x, JLabel y, JLabel steps, JLabel exit) {
 		random = new Random();
 		this.map = matriz;
 		max_width = matriz.length;
@@ -47,6 +54,11 @@ public class reforcement extends Thread{
 		qTable = new double[max_height*max_width][4];
 		this.arq = new archieve();
 		this.agente = agente;
+		
+		this.xL = x;
+		this.yL = y;
+		this.sL = steps;
+		this.eL = exit;
 
 		arq.loadFileInMe(qTable, "qTableReforcement.txt");
 	}
@@ -54,7 +66,7 @@ public class reforcement extends Thread{
 	public void run(){
 		startSomewhere();
 		agente.setPosition(startC, startL);
-		while(steps < 999999) {
+		while(steps < 1000000) {
 			try {
 				sleep(speed);
 			} catch (InterruptedException e) {
@@ -62,8 +74,12 @@ public class reforcement extends Thread{
 				e.printStackTrace();
 			}
 			action();
-			agente.setPosition(startC, startL);
+			
+			if(!hide)
+				agente.setPosition(startC, startL);
+			
 			steps++;
+			sL.setText("" + steps);
 		}
 		agente.stopMe();
 		arq.saveFile(qTable, "qTableReforcement.txt", qTable.length);
@@ -74,7 +90,12 @@ public class reforcement extends Thread{
 		this.speed = new_speed;
 	}
 	
-	
+	public void hideAgent() {
+		if(hide)
+			hide = false;
+		else
+			hide = true;
+	}
 	
 	/**
 	 * action: 0 - esquerda, 1 - cima, 2 - direita, 3 - baixo
@@ -92,23 +113,26 @@ public class reforcement extends Thread{
 				act = random.nextInt(4);
 			}
 			
-			
 			switch(act) {
 				//esquerda
 				case 0:
 					startC--;
+					yL.setText(""+(startC+1));
 					break;
 				//cima
 				case 1:
 					startL--;
+					xL.setText(""+(startL+1));
 					break;
 				//direita
 				case 2:
 					startC++;
+					yL.setText(""+(startC+1));
 					break;
 				//baixo
 				case 3:
 					startL++;
+					xL.setText(""+(startL+1));
 					break;	
 			}
 			
@@ -154,17 +178,17 @@ public class reforcement extends Thread{
 	 * @param state: o estado o qual foi tomado uma ação
 	 * @return
 	 */
-	private double calcActionQ(int state) {
-		double q;
+	private synchronized double calcActionQ(int state) {
+		double q = 0;
 		int ref = 0;
 		
-		if(state == goal) 
+		if(state == goal) {
 			ref = 10;
+			exits++;
+			eL.setText("" + exits);
+		}
 
 		q = ref + (y * max(state));
-		q/=9999999;
-		
-		//System.out.println(q);
 		
 		return q;
 	}

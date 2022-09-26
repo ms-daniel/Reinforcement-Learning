@@ -36,6 +36,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import javax.swing.JCheckBox;
 
 public class maze61 extends JPanel {
 	private matriz matr = new matriz();
@@ -62,6 +63,29 @@ public class maze61 extends JPanel {
 		JFileChooser chooser = new JFileChooser();
 		chooser.setCurrentDirectory(new File("."));
 		chooser.setBounds(0	, 0, 400, 400);
+		
+		JCheckBox hideAgent = new JCheckBox("Hide agent");
+		hideAgent.setToolTipText("best performance");
+		hideAgent.setBounds(16, 88, 97, 23);
+		add(hideAgent);
+		
+		JLabel stepsCount = new JLabel("0");
+		stepsCount.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		stepsCount.setBounds(350, 2, 85, 14);
+		add(stepsCount);
+		
+		JLabel exitsCount = new JLabel("0");
+		exitsCount.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		exitsCount.setBounds(465, 2, 60, 14);
+		add(exitsCount);
+		
+		JLabel stepsLabel = new JLabel("Step(s):");
+		stepsLabel.setBounds(305, 2, 45, 14);
+		add(stepsLabel);
+		
+		JLabel exitLabel = new JLabel("Exit:");
+		exitLabel.setBounds(440, 2, 25, 14);
+		add(exitLabel);
 		
 		JSpinner nWayOutSpinner = new JSpinner();
 		nWayOutSpinner.setEnabled(false);
@@ -205,6 +229,7 @@ public class maze61 extends JPanel {
 
 		
 		JLabel areaM = new JLabel();
+		areaM.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		areaM.setFocusable(false);
 		areaM.setBounds(220, 18, 305, 305);
 		add(areaM);
@@ -224,6 +249,28 @@ public class maze61 extends JPanel {
 		menuLabel.setBounds(10, 17, 199, 307);
 		add(menuLabel);
 		
+		JLabel xLabel = new JLabel("x:");
+		xLabel.setBounds(220, 2, 10, 14);
+		add(xLabel);
+		
+		JLabel xPos = new JLabel("n");
+		xPos.setBounds(230, 2, 15, 14);
+		add(xPos);
+		
+		JLabel yLabel = new JLabel("y:");
+		yLabel.setBounds(253, 2, 10, 14);
+		add(yLabel);
+		
+		JLabel yPos = new JLabel("n");
+		yPos.setBounds(263, 2, 15, 14);
+		add(yPos);
+		
+		hideAgent.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					iaR.hideAgent();
+			}
+		});
+		
 		slider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				iaR.changeSpeed(slider.getValue());
@@ -237,7 +284,7 @@ public class maze61 extends JPanel {
 				agente = new locationPrint(areaM);
 				agente.start();
 				
-				iaR = new reforcement(mat,1,29, agente);
+				iaR = new reforcement(mat,1,29, agente, xPos, yPos, stepsCount, exitsCount);
 				iaR.start();
 			}
 		});

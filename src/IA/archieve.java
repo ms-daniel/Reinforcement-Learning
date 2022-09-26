@@ -6,7 +6,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.Arrays;
+import java.util.Locale;
 
 public class archieve {
 	private File arqF;
@@ -71,18 +76,22 @@ public class archieve {
 			arq = new FileWriter(file);
 			gravarArq = new PrintWriter(arq);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		
 		
 		for(int i = 0; i < leng; i++) {
 			for(int j =0; j < 4; j++) {
-				gravarArq.print(matriz[i][j]);
+				if(matriz[i][j] > 0)
+					matriz[i][j] *= 0.01;
+				gravarArq.print(truncar(matriz[i][j]));
+				
 				gravarArq.print(";");
 			}
 			gravarArq.println();
 		}
+		//truncar(matriz[0][0]);
 		try {
 			arq.close();
 		} catch (IOException e) {
@@ -97,5 +106,22 @@ public class archieve {
 		for(int i = 0; i < matriz.length; i++)
 			Arrays.fill(matriz[i], 0);
 	}
+	
+	 private String truncar(Double valor) {
+		 Number number = valor;
+		 if(valor > 0) {
+			 Locale[] locales = NumberFormat.getAvailableLocales();
+			 NumberFormat form;
+	
+	         form = NumberFormat.getPercentInstance(locales[990]);
+	         form.setMaximumFractionDigits(10);
+	
+	         try {
+	            number = form.parse(form.format(valor));
+	         } catch (ParseException e) {}
+		 }
+         
+         return number.toString();
+	 }
 	
 }
