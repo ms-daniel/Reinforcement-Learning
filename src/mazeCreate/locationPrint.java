@@ -21,9 +21,10 @@ public class locationPrint extends Thread{
 	/*
 	 * posicoes de onde sera pintado o agente
 	 */
-	public void setPosition(int x, int y) {
-		locationPrint.x = x;
-		locationPrint.y = y;
+	public void setPosition(int tx, int ty) {
+		x = tx;
+		y = ty;
+		img.setIcon(printPosition());
 	}
 	
 	public void clearMaze() {
@@ -53,11 +54,12 @@ public class locationPrint extends Thread{
 	@Override
 	public void run(){
 		while(!stop) {
-			if(x_ant != x || y_ant != y) {
+			//System.out.println("x: " + x + " y: " + y);
+			/*if(x_ant != x || y_ant != y) {
 				img.setIcon(printPosition());
 				x_ant = x;
 				y_ant = y;
-			}
+			}*/
 		}
 	}
 	

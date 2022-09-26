@@ -34,6 +34,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class maze61 extends JPanel {
 	private matriz matr = new matriz();
@@ -48,6 +50,7 @@ public class maze61 extends JPanel {
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	
 	private maze61x61Thread mazeThread;
+	private reforcement iaR;
 	/**
 	 * Create the panel.
 	 */
@@ -173,9 +176,11 @@ public class maze61 extends JPanel {
 		add(speed);
 		
 		JSlider slider = new JSlider();
+		slider.setMajorTickSpacing(5);
 		slider.setEnabled(false);
-		slider.setValue(20);
+		slider.setValue(100);
 		slider.setBounds(13, 157, 193, 26);
+		slider.setInverted(true);
 		add(slider);
 		
 		JSeparator separator = new JSeparator();
@@ -219,12 +224,20 @@ public class maze61 extends JPanel {
 		menuLabel.setBounds(10, 17, 199, 307);
 		add(menuLabel);
 		
+		slider.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				iaR.changeSpeed(slider.getValue());
+				//System.out.println(slider.getValue());
+			}
+		});
+		
 		play.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				agente = new locationPrint(areaM);
 				agente.start();
-				reforcement iaR = new reforcement(mat,1,3000, agente);
+				
+				iaR = new reforcement(mat,1,29, agente);
 				iaR.start();
 			}
 		});

@@ -22,6 +22,7 @@ public class reforcement extends Thread{
 	
 	private int goal;
 	private int steps = 0;
+	private int speed = 0;
 	
 	private double y = 0.9;
 	
@@ -46,28 +47,35 @@ public class reforcement extends Thread{
 		qTable = new double[max_height*max_width][4];
 		this.arq = new archieve();
 		this.agente = agente;
-		
-		
+
 		arq.loadFileInMe(qTable, "qTableReforcement.txt");
 	}
 	
 	public void run(){
 		startSomewhere();
+		agente.setPosition(startC, startL);
 		while(steps < 999999) {
 			try {
-				sleep(5);
+				sleep(speed);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			agente.setPosition(startC, startL);
-			//System.out.println("L: " + startL + " C: " + startC + " Parede?: " + map[startL][startC]);
 			action();
+			agente.setPosition(startC, startL);
 			steps++;
 		}
+		agente.stopMe();
 		arq.saveFile(qTable, "qTableReforcement.txt", qTable.length);
 		
 	}
+	
+	public void changeSpeed(int new_speed) {
+		this.speed = new_speed;
+	}
+	
+	
+	
 	/**
 	 * action: 0 - esquerda, 1 - cima, 2 - direita, 3 - baixo
 	 */
@@ -104,10 +112,7 @@ public class reforcement extends Thread{
 					break;	
 			}
 			
-			//System.out.println("\nAtual\nL: " + startL + "\tC: " + startC + "\nQ: " + Arrays.toString(qTable[currentLine]));
-			
 			calcCurrentLine();
-			//System.out.println(qTable[previousLine][act]);
 			qTable[previousLine][act] = calcActionQ(currentLine);
 		}
 	}
@@ -155,9 +160,11 @@ public class reforcement extends Thread{
 		
 		if(state == goal) 
 			ref = 10;
-		
-		
+
 		q = ref + (y * max(state));
+		q/=9999999;
+		
+		//System.out.println(q);
 		
 		return q;
 	}
