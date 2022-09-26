@@ -15,10 +15,7 @@ public class maze61x61Thread extends Thread{
 	private JLabel img = new JLabel();
 	private JButton play;
 	private boolean animation = true;
-	
-	
-	
-	
+
 	public maze61x61Thread(int[][] matriz, JLabel label, JButton play, boolean anim) {
 		this.matriz = matriz;
 		this.img= label;

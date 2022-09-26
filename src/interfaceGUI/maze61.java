@@ -3,8 +3,8 @@ package interfaceGUI;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import mazeCreate.locationPrint;
 import mazeCreate.matriz;
-import mazeCreate.maze61x61;
 import mazeCreate.maze61x61Thread;
 
 import javax.swing.JLabel;
@@ -13,16 +13,9 @@ import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.util.concurrent.TimeUnit;
 
 import javax.swing.border.BevelBorder;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.JMenu;
-import javax.swing.JPopupMenu;
-import java.awt.Component;
 import javax.swing.JButton;
-import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
@@ -30,16 +23,12 @@ import javax.swing.JSlider;
 import javax.swing.JRadioButton;
 import java.awt.SystemColor;
 import java.awt.Insets;
-import javax.swing.JRadioButtonMenuItem;
 import java.awt.Font;
 import javax.swing.ButtonGroup;
-import javax.swing.ButtonModel;
-import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import IA.reforcement;
 
-import javax.swing.event.ChangeEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
@@ -49,6 +38,7 @@ import javax.swing.SpinnerNumberModel;
 public class maze61 extends JPanel {
 	private matriz matr = new matriz();
 	private maze61 esse;
+	private locationPrint agente;
 	private int[][] mat = matr.getM61();
 	
 	private JRadioButton uploadMazeRB;
@@ -211,8 +201,7 @@ public class maze61 extends JPanel {
 		
 		JLabel areaM = new JLabel();
 		areaM.setFocusable(false);
-		areaM.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(30, 144, 255), new Color(30, 144, 255), new Color(0, 0, 205), null));
-		areaM.setBounds(219, 17, 306, 306);
+		areaM.setBounds(220, 18, 305, 305);
 		add(areaM);
 		
 		JButton construct = new JButton("Construct");
@@ -233,8 +222,16 @@ public class maze61 extends JPanel {
 		play.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				reforcement iaR = new reforcement(mat,1,3000);
+				agente = new locationPrint(areaM);
+				agente.start();
+				reforcement iaR = new reforcement(mat,1,3000, agente);
 				iaR.start();
+			}
+		});
+		stopRun.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				agente.stopMe();
 			}
 		});
 		

@@ -3,6 +3,10 @@ package IA;
 import java.util.Arrays;
 import java.util.Random;
 
+import javax.swing.JLabel;
+
+import mazeCreate.locationPrint;
+
 public class reforcement extends Thread{
 	//
 	private double[][] qTable;
@@ -29,7 +33,10 @@ public class reforcement extends Thread{
 	
 	private archieve arq;
 	
-	public reforcement(int[][] matriz, int mode, int goal) {
+	//onde sera desenhado o local do agente
+	locationPrint agente;
+	
+	public reforcement(int[][] matriz, int mode, int goal, locationPrint agente) {
 		random = new Random();
 		this.map = matriz;
 		max_width = matriz.length;
@@ -38,19 +45,27 @@ public class reforcement extends Thread{
 		this.goal = goal;
 		qTable = new double[max_height*max_width][4];
 		this.arq = new archieve();
+		this.agente = agente;
+		
 		
 		arq.loadFileInMe(qTable, "qTableReforcement.txt");
 	}
 	
 	public void run(){
 		startSomewhere();
-
-		while(steps < 9999999) {
+		while(steps < 999999) {
+			try {
+				sleep(5);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			agente.setPosition(startC, startL);
+			//System.out.println("L: " + startL + " C: " + startC + " Parede?: " + map[startL][startC]);
 			action();
-			//System.out.println(steps);
 			steps++;
 		}
-		arq.saveFile(qTable, "qTableReforcement.txt");
+		arq.saveFile(qTable, "qTableReforcement.txt", qTable.length);
 		
 	}
 	/**
@@ -89,7 +104,7 @@ public class reforcement extends Thread{
 					break;	
 			}
 			
-			System.out.println("\nAtual\nL: " + startL + "\tC: " + startC + "\nQ: " + Arrays.toString(qTable[currentLine]));
+			//System.out.println("\nAtual\nL: " + startL + "\tC: " + startC + "\nQ: " + Arrays.toString(qTable[currentLine]));
 			
 			calcCurrentLine();
 			//System.out.println(qTable[previousLine][act]);

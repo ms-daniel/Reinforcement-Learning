@@ -1,6 +1,7 @@
 package IA;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -8,6 +9,7 @@ import java.io.PrintWriter;
 import java.util.Arrays;
 
 public class archieve {
+	private File arqF;
 	private static FileWriter arq;
 	private PrintWriter gravarArq;
 	
@@ -22,7 +24,13 @@ public class archieve {
 	public void loadFileInMe(double[][] matriz, String file) {
 		BufferedReader buffRead = null;
 		try{
-			buffRead = new BufferedReader(new FileReader(file));
+			arqF = new File(file);
+			
+			//caso o arquivo nao exista
+			if(!arqF.exists())
+				arqF.createNewFile();
+			
+			buffRead = new BufferedReader(new FileReader(arqF));
 			
 			String linha = "";
 			String[] matSTR = new String[4];
@@ -43,9 +51,7 @@ public class archieve {
 		}catch(IOException e) {
 			
 		}catch(ArrayIndexOutOfBoundsException e) {
-			//quando não há arquivo para ler
-			for(int i = 0; i < matriz.length; i++)
-				Arrays.fill(matriz[i], 0);
+			fillMatriz(matriz);
 		}finally {
 			try {
 				buffRead.close();
@@ -60,7 +66,7 @@ public class archieve {
 	 * @param matriz - a matriz que contem os valores que serao salvos no arquivo
 	 * @param file - o nome do arquivo dentro da pasta do projeto onde sera salvas as informacoes (ex: "qTable.txt")
 	 */
-	public void saveFile(double[][] matriz , String file) {
+	public void saveFile(double[][] matriz , String file, int leng) {
 		try {
 			arq = new FileWriter(file);
 			gravarArq = new PrintWriter(arq);
@@ -70,7 +76,7 @@ public class archieve {
 		}
 		
 		
-		for(int i = 0; i < 36; i++) {
+		for(int i = 0; i < leng; i++) {
 			for(int j =0; j < 4; j++) {
 				gravarArq.print(matriz[i][j]);
 				gravarArq.print(";");
@@ -84,6 +90,12 @@ public class archieve {
 			e.printStackTrace();
 		}
 		gravarArq.close();
+	}
+	
+	private void fillMatriz(double[][] matriz) {
+		//quando não há arquivo para ler
+		for(int i = 0; i < matriz.length; i++)
+			Arrays.fill(matriz[i], 0);
 	}
 	
 }
