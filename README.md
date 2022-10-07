@@ -12,7 +12,7 @@ In the future, the upload functionality for a custom maze will be increased.
 
 A very simple and intuitive interface
 
-![InitialInterface](https://github.com/ms-daniel/justimagens/blob/main/reinforcementLearning/inicial.png) <br>
+<img src="https://github.com/ms-daniel/justimagens/blob/main/reinforcementLearning/inicial.png" width=450px/>
 It currently has two maze creation options, but they will be merged into just one.
 
 #### Maze 61 x 61
