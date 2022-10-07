@@ -11,5 +11,5 @@ In the future, the upload functionality for a custom maze will be increased.
 ## Options
 
 
-![InitialInterface](https://github.com/ms-daniel/justimagens/tree/main/reinforcementLearning/inicial.png)
+![InitialInterface](https://github.com/ms-daniel/justimagens/blob/main/reinforcementLearning/inicial.png) <br>
 //TODO
